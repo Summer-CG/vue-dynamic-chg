@@ -12,14 +12,31 @@ vue
 
 #### Instructions
 
+##### 如何使用？
+ ```html
+<div id="app">
+  <dynamic :options="options" />
+</div>
+```
 
+```javascript
+import Dynamic from 'vue-dynamic-chg/components/Dynamic'
+export default {
+        components: { Dynamic },
+        data() {
+          return {
+            options:{
+                //   options配置  例如
+                data:{},
+                ...
+                dynamics:[],
+            }
+          }
+        },
+      }
+```
 
-
-vue-dynamic-chg 
-
-接收 props：options [Array]
-
-options 数据格式：
+##### options 数据配置：
 ```javascript
 options:{
        //全局组件信息配置  一下 this 都指向 动态组件(dynamic) = 配置好后生成的组件
@@ -75,13 +92,16 @@ options:{
     
        }
    }
-
-
 ```
 
-tool 函数
+##### tool库 提供函数
 ```
-    setSubordinate(options:[Array]) // 根据 配置 生成 合并动态组件
+    1.formatComponent([Array],[Array]) 
+    第一个参数 把配置 通过 children 连接起来，
+    第二个参数 表示第一个参数最后一个 组件配置 的多个子级组件
+
+    2.setSubordinate：([Array])
+    根据 配置 生成 合并动态组件
     返回一个新的函数 用来快速生成 生成配置简化后的
     例如
     let elFormItem_elInput = setSubordinate(['el-form-item','el-input'])
@@ -93,6 +113,7 @@ tool 函数
         elInputProps:{}
     })
 ```
+##### this 指向
 
 #### Gitee Feature
 
