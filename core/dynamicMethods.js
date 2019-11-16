@@ -170,7 +170,7 @@ export function getPublicComponentOption() {
                         return value;
                         break;
                 }
-            }, getOptionData(h, renderOptions = {}) {
+            }, getOptionData(h, renderOptions = ()=>{}) {
                 let options = renderOptions.call(this,h)
                 return {refInFor: true, ...options};
             }, getChildren(h, componentOption) {
