@@ -3,9 +3,7 @@ import {getMergeOptions, getComponentOptions, getPublicComponentOption} from './
 const publicMergeOptions = ["data", "lifecycle", "watch", "computed", "methods", "components"];
 const dynamicComponent = function (options) {
     let dynamicComponentOptions = getPublicComponentOption();
-    let {dynamics = [], ...parent} = options;
-    parent.children = dynamics;
-    let mergeData = getMergeOptions(publicMergeOptions, [parent]);
+    let mergeData = getMergeOptions(publicMergeOptions, [options]);
     let ComponentOptions = getComponentOptions(mergeData);
     dynamicComponentOptions.methods = Object.assign(dynamicComponentOptions.methods, ComponentOptions.methods);
     let {methods, ...segment} = ComponentOptions;

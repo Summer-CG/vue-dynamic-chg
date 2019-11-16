@@ -171,8 +171,7 @@ export function getPublicComponentOption() {
                         break;
                 }
             }, getOptionData(h, renderOptions = {}) {
-                let options = {};
-                Object.keys(renderOptions).forEach(key => options[key] = this.getTypeofValue(renderOptions[key], h));
+                let options = renderOptions.call(this,h)
                 return {refInFor: true, ...options};
             }, getChildren(h, componentOption) {
                 let {children} = componentOption;

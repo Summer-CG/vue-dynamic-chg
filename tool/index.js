@@ -86,66 +86,6 @@ export function gethumpName(options = []) {
     })
 }
 
-function getFormatOptions(option, humpNameArr, components) {
-    let length = humpNameArr.length;
-    for (let [index, item]of humpNameArr.entries()) {
-
-        if (index + 1 === length) {
-            components[index] = {...components[index], ...option,}
-        }
-        // 如果 配置有renderOptions.props 高于 xxxxxProps 属性 优先级
-        if (option[item]) {
-            let props = function () {
-                return {...option[item]}
-            }
-            let {renderOptions={}} = components[index];
-            // 合并到 props中
-            let type = getTypeof(renderOptions.props);
-            switch (type) {
-                case 'Object':
-                    let obj = renderOptions.props;
-                    renderOptions.props = function () {
-                        return{
-                            ...props.call(this),
-                            ...obj
-                        }
-                    }
-                    break;
-                case 'Function':
-                    let fn = renderOptions.props;
-                    renderOptions.props = function () {
-                        return {
-                            ...props.call(this),
-                            ...fn.call(this)
-                        }
-                    }
-                    break;
-
-                default:
-                    renderOptions.props = props
-                    break;
-            }
-            // let {renderOptions={}} = components[index];
-            // renderOptions.props = props;
-            components[index].renderOptions = renderOptions;
-        };
-
-    }
-    return components;
-}
-
-export function setSubordinate(options = []) {
-    let humpNameArr = gethumpName(options);
-    let components = options.map((item) => {
-        return setDynamicOption({type: item})
-    })
-    return function (option = {}, callback) {
-        let componentArr = deepCopy(components);
-        return formatComponent(getFormatOptions(option, humpNameArr, componentArr, callback))
-    }
-}
-
-
 function copyArray(ori, type, copy = []) {
     for (const [index, value] of ori.entries()) {
         copy[index] = deepCopy(value);
