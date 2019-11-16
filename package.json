@@ -2,7 +2,7 @@
   "name": "vue-dynamic-chg",
   "version": "0.0.1",
   "description": "vue-dynamic-component",
-  "main": "index.js",
+  "main": "components/Dynamic/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +10,7 @@
     "type": "git",
     "url": "https://gitee.com/summer_chg/vue-dynamic-chg.git"
   },
+
   "author": "",
   "license": "ISC",
   "dependencies": {
