@@ -57,7 +57,8 @@ const getParentFormat = publicConfig => {
 
 export function formatComponent(publicConfig, children = []) {
     let {parentLast, parentAll} = getParentFormat(publicConfig);
-    parentLast.children = [...children]
+    let {children:parentChildren=[]} = parentLast;
+    parentLast.children = [...parentChildren,...children]
     return parentAll;
 }
 
