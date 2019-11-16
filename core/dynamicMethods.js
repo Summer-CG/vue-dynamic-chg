@@ -105,7 +105,12 @@ export function getPublicComponentOption() {
         name: "dynamicComponent", render: function (...args) {
             let h = args[0];
             let vNode = this.createComponent(h, this.options);
-            return h('div', vNode)
+            if(this.options.length===1){
+                return vNode
+            }
+            else{
+                return h('div', vNode)
+            }
         }, props: {
             options: {
                 type: Array, default() {
@@ -182,7 +187,7 @@ export function getPublicComponentOption() {
                 }
             }, createComponent(h, componentOptions) {
                 return componentOptions.map((item) => {
-                    let {type, template} = item;
+                    let {type='div', template} = item;
                     if (!template) {
                         let children = this.getStaticHtml(item.staticHtml, h);
                         if (!children) {
