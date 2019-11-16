@@ -1,6 +1,6 @@
 import dynamicComponent from '../../core/dynamicComponent';
 
-export default {
+ const dynamic = {
     name: "dynamic",
     props: {
         options: {
@@ -20,5 +20,8 @@ export default {
             }
         )
     },
-
 };
+dynamic.install = function(Vue) {
+    Vue.component(dynamic.name,dynamic);
+};
+export default dynamic

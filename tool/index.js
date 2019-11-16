@@ -86,6 +86,64 @@ export function gethumpName(options = []) {
     })
 }
 
+// 合并 函数
+export function mergeFunction(...args) {
+    return function (...data) {
+        let arr = getMergeFunctionArr(args)
+        let type = getTypeof(args[0]);
+        switch (type) {
+            case 'Object':
+                return arr.reduce(function (prve,curr,index) {
+                    prve = {...prve,...curr}
+                },{})
+                break;
+            case 'Array':
+                return arr.reduce(function (prve,curr,index) {
+                    prve = [...prve,...curr]
+                },[])
+                break;
+            default:
+                return args[args.length-1]
+                break;
+        }
+    }
+}
+export function getMergeFunctionArr(data,args){
+    return  args.map(item=>{
+        return getTypeof(item)==='Function'?item.call(this,...data):{};
+    });
+}
+
+// 合并 函数
+export function mergeRanderOptions(...args) {
+    return function (...data) {
+        let arr = getMergeFunctionArr.call(this,data,args)
+        // 合并
+        let optios = arr.reduce(function (prve,curr,index) {
+            for(let [key,value] of Object.entries(curr)){
+                let type = getTypeof(curr[key]);
+                switch (type) {
+                    case 'Object':
+                        var prveKey = prve[key]||{}
+                        var currKey = curr[key]
+                        prve[key] = {...prveKey,...currKey}
+                        break;
+                    case 'Array':
+                        var prveKey = prve[key] || [];
+                        var currKey = curr[key];
+                        prve[key] = [...prveKey,...currKey]
+                        break;
+                    default:
+                        prve[key] = curr[key]
+                        break;
+                }
+            }
+            return prve;
+        },{})
+        return optios
+    }
+}
+
 function copyArray(ori, type, copy = []) {
     for (const [index, value] of ori.entries()) {
         copy[index] = deepCopy(value);
